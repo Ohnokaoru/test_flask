@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from datetime import datetime
 from pm25 import get_pm25
+import json
 
 # 全域端
 books = {1: "Python book", 2: "Java book", 3: "Flask book"}
@@ -79,5 +80,30 @@ def pm25_table():
 
     return render_template("pm25.html", cols=cols, values=values)
 
+
+# 繪圖
+@app.route("/pm25-charts")
+def pm25_charts():
+    return render_template("pm25-charts.html")
+
+
+# 資料不想給外部看到，methods=["POST"]
+@app.route("/pm25-data", methods=["GET"])
+def pm25_data():
+    cols, values = get_pm25()
+    site = [value[0] for value in values]
+    pm25 = [value[2] for value in values]
+    datetime = values[0][-2]
+
+    # 前端只認識json，所以要以python的dict轉json輸出
+    result = json.dumps(
+        {"site": site, "pm25": pm25, "time": datetime}, ensure_ascii=False
+    )
+
+    # print(site, pm25)
+    return result
+
+
+# print(pm25_data())
 
 app.run(debug=True)
