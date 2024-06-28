@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM2.5</title>
+    <style>
+        body {
+            background-color: rgb(188, 240, 241);
+        }
+
+        #title {
+            background-color: azure;
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 5px auto;
+            border-radius: 10px;
+            padding: 5px;
+            width: 80%;
+
+        }
+
+        table {
+            border: ipx solid black;
+            border-collapse: collapse;
+            margin: 10px auto;
+            text-align: center;
+            padding: 10px;
+            width: 80%;
+
+        }
+
+        th {
+            background-color: rgb(216, 200, 179);
+            font-size: 20px;
+        }
+
+        td {
+            background-color: rgb(245, 242, 237);
+        }
+
+        td:nth-child(1) {
+            background-color: rgb(198, 213, 241) !important;
+        }
+
+        td:nth-child(3) {
+            background-color: rgb(250, 188, 194) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="title"><b>全省PM2.5數據</b></div>
+    <table border="1">
+        <thead>
+            <tr>
+                {% for col in cols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for value in values %}
+            <tr>
+                {% for i in value %}
+                <td>{{i}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>

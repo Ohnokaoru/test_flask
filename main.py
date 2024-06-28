@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from datetime import datetime
-
+from pm25 import get_pm25
 
 # 全域端
 books = {1: "Python book", 2: "Java book", 3: "Flask book"}
@@ -63,13 +63,21 @@ def get_books():
             "image_url": "https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/036/04/0010360466.jpg&v=62d695bak&w=348&h=348",
         },
     }
-
-    for id in books:
-        print(
-            f"{id} 名稱:{books[id]['name']} 價格:{books[id]['price']} 圖片:{books[id]['image_url']}"
-        )
+    # 測試用
+    # for id in books:
+    #     print(
+    #         f"{id} 名稱:{books[id]['name']} 價格:{books[id]['price']} 圖片:{books[id]['image_url']}"
+    #     )
 
     return render_template("books.html", books=books)
+
+
+@app.route("/pm25")
+def pm25_table():
+    # 呼叫外部模組的函式
+    cols, values = get_pm25()
+
+    return render_template("pm25.html", cols=cols, values=values)
 
 
 app.run(debug=True)
