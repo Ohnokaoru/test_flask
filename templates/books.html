@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>總書籍</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: rgb(246, 231, 213);
+        }
+
+        .sub-title {
+            margin: auto;
+            background-color: rgb(214, 82, 82);
+            width: 300px;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>書籍列表</h1>
+    <hr>
+    {% for id in books %}
+    <div class="sub-title">書名:{{books[id]['name']}}</div>
+    <h3>價格:{{books[id]['price']}}</h3>
+    <img src="{{books[id]['image_url']}}" alt="">
+    <hr>
+
+    {% endfor %}
+    <!-- {{books}} -->
+</body>
+
+</html>
