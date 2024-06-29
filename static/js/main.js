@@ -1,3 +1,4 @@
+const myChart = echarts.init(document.getElementById('main'));
 
 // 呼叫函式
 drawPM25()
@@ -13,13 +14,14 @@ function drawPM25() {
         success: (result) => {
             console.log(result);
             drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"])
+        },
+        error: () => {
+            console.error("读取数据失败");
         }
 
-    }
 
-    )
+    });
 }
-const myChart = echarts.init(document.getElementById('main'));
 
 function drawChart(chart, title, legend, xData, yData,) {
     // 基于准备好的dom，初始化echarts实例
@@ -54,8 +56,3 @@ function drawChart(chart, title, legend, xData, yData,) {
 
 
 }
-
-
-
-
-
