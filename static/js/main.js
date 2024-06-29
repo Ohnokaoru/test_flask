@@ -1,10 +1,17 @@
 const myChart = echarts.init(document.getElementById('main'));
 
+$("#update").click(() => {
+    console.log("click");
+});
+
 // 呼叫函式
 drawPM25()
 
 // 動態繪製
 function drawPM25() {
+    // 讀取資料顯示loading畫面
+    myChart.showLoading();
+
     $.ajax({
         //找route資料
         url: "/pm25-data",
@@ -13,17 +20,23 @@ function drawPM25() {
         //如果前面都成功要做什麼? return出來的值
         success: (result) => {
             // console.log(result);
-            drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"])
 
             // jquery取值用法
-            $("#pm25_high_site").text(result["max_data"]["site"]);
+            document.querySelector("#pm25_high_site").innerText = result["max_data"]["site"];
+            // $("#pm25_high_site").text(result["max_data"]["site"]);
             $("#pm25_high_value").text(result["max_data"]["pm25"]);
             $("#pm25_low_site").text(result["min_data"]["site"]);
             $("#pm25_low_value").text(result["min_data"]["pm25"]);
 
+            drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"])
+
+            // 讀取完資料讓loading畫面消失
+            myChart.hideLoading();
+
         },
         error: () => {
-            console.error("读取数据失败");
+            alert("读取数据失败");
+            myChart.hideLoading();
         }
 
 
