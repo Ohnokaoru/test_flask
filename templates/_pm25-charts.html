@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM2.5圖形</title>
+    <!-- 外部引用jquery函式庫 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!--  外部引用echarts函式庫(版本5.5.0) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+</head>
+
+<body>
+    <h1>PM2.5全省數據圖形</h1>
+    <!-- 繪製圖形準備區 -->
+    <div id="main" style="width: 1200px;height:400px;"></div>
+
+    <!-- <h2>test</h2> -->
+    <!-- <h3>圖形</h3> -->
+
+
+
+    <script>
+
+        // 呼叫函式
+        drawPM25()
+
+        // 動態繪製
+        function drawPM25() {
+            $.ajax({
+                //找route資料
+                url: "/pm25-data",
+                type: "GET",
+                dataType: "json",
+                //如果前面都成功要做什麼? return出來的值
+                success: (result) => {
+                    console.log(result);
+                    drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"])
+                }
+
+            }
+
+            )
+        }
+        const myChart = echarts.init(document.getElementById('main'));
+
+        function drawChart(chart, title, legend, xData, yData,) {
+            // 基于准备好的dom，初始化echarts实例
+
+
+            // 指定图表的配置项和数据
+            let option = {
+                title: {
+                    text: title
+                },
+                tooltip: {},
+                legend: {
+                    data: [legend]
+                },
+                xAxis: {
+                    data: xData
+                },
+                yAxis: {},
+                series: [
+                    {
+                        name: legend,
+                        type: 'bar',
+                        data: yData
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            chart.setOption(option);
+
+
+
+
+        }
+
+
+
+
+
+
+
+        // const h2El = document.querySelector("h2");
+        // h2El.innerText = "123";
+        // h2El.addEventListener("click", () => {
+        //     alert("傳統js用法");
+        // });
+
+
+        // $("h1").css("color", "blue");
+        // $("h2").html("<u>456</u>");
+        // $("h3").text("測試");
+
+        // // 點擊效果，小括弧內沒有值為匿名函式
+        // $("h1").click(() => {
+        //     alert("jquery用法")
+        // });
+
+
+
+    </script>
+</body>
+
+</html>
