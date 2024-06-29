@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from datetime import datetime
-from pm25 import get_pm25
+from pm25 import get_pm25, get_county_pm25, six_countys
 import json
 
 # 全域端
@@ -114,6 +114,18 @@ def pm25_data():
     )
 
     # print(site, pm25)
+    return result
+
+
+@app.route("/sixcounty-pm25")
+def get_sixcounty_pm25():
+    pm25 = get_county_pm25()
+
+    result = json.dumps(
+        {"pm25": pm25, "site": six_countys},
+        ensure_ascii=False,
+    )
+
     return result
 
 
