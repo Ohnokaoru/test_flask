@@ -12,8 +12,15 @@ function drawPM25() {
         dataType: "json",
         //如果前面都成功要做什麼? return出來的值
         success: (result) => {
-            console.log(result);
+            // console.log(result);
             drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"])
+
+            // jquery取值用法
+            $("#pm25_high_site").text(result["max_data"]["site"]);
+            $("#pm25_high_value").text(result["max_data"]["pm25"]);
+            $("#pm25_low_site").text(result["min_data"]["site"]);
+            $("#pm25_low_value").text(result["min_data"]["pm25"]);
+
         },
         error: () => {
             console.error("读取数据失败");

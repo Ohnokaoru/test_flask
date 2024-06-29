@@ -95,9 +95,22 @@ def pm25_data():
     pm25 = [value[2] for value in values]
     datetime = values[0][-2]
 
+    # 尋找max與min
+    sorted_data = sorted(values, key=lambda x: x[2])
+    # print(sorted_data)
+    min_data = {"site": sorted_data[0][0], "pm25": sorted_data[0][2]}
+    max_data = {"site": sorted_data[-1][0], "pm25": sorted_data[-1][2]}
+
     # 前端只認識json，所以要以python的dict轉json輸出
     result = json.dumps(
-        {"site": site, "pm25": pm25, "time": datetime}, ensure_ascii=False
+        {
+            "site": site,
+            "pm25": pm25,
+            "time": datetime,
+            "min_data": min_data,
+            "max_data": max_data,
+        },
+        ensure_ascii=False,
     )
 
     # print(site, pm25)
