@@ -120,7 +120,6 @@ def pm25_data():
 @app.route("/sixcounty-pm25")
 def get_sixcounty_pm25():
     pm25 = get_county_pm25()
-
     result = json.dumps(
         {"pm25": pm25, "site": six_countys},
         ensure_ascii=False,
