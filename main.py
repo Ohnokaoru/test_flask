@@ -73,12 +73,12 @@ def get_books():
     return render_template("books.html", books=books)
 
 
-@app.route("/pm25")
+@app.route("/pm25-table")
 def pm25_table():
     # 呼叫外部模組的函式
     cols, values = get_pm25()
 
-    return render_template("pm25.html", cols=cols, values=values)
+    return render_template("pm25-table.html", cols=cols, values=values)
 
 
 # 繪圖
