@@ -19,6 +19,7 @@ def get_pm25():
     return col, values
 
 
+# 六都datas
 def get_county_pm25():
     global df
     if df is None:
@@ -30,6 +31,33 @@ def get_county_pm25():
         pm25.append(round(df.groupby("county").get_group(county)["pm25"].mean(), 2))
 
     return pm25
+
+
+# 各縣市
+def get_onecounty():
+    global df
+    if df is None:
+        df = pd.read_csv(url)
+        df = df.dropna()
+
+    one_county = df["county"].unique()
+
+    return one_county
+
+
+def get_onecounty_pm25(county):
+    global df
+    if df is None:
+        df = pd.read_csv(url)
+        df = df.dropna()
+
+    df1 = df.groupby("county").get_group(county)
+
+    col = df1.columns.tolist()
+    values = df1.values.tolist()
+    print(col, values)
+
+    return col, values
 
 
 # 區分出檔案是作為主程式直接執行，還是作為模組被引入到其他程式中使用

@@ -113,3 +113,9 @@ function drawSixcounty_pm25() {
 
     });
 };
+
+// select option
+$("#select_county").change(() => {
+    one = $("#select_county").val()
+    console.log(one);
+});

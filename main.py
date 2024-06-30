@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from datetime import datetime
-from pm25 import get_pm25, get_county_pm25, six_countys
+from pm25 import get_pm25, get_county_pm25, six_countys, get_onecounty
 import json
 
 # 全域端
@@ -81,10 +81,13 @@ def pm25_table():
     return render_template("pm25-table.html", cols=cols, values=values)
 
 
-# 繪圖
+# 繪制單一縣市
 @app.route("/pm25-charts")
 def pm25_charts():
-    return render_template("pm25-charts.html")
+    one_county = get_onecounty()
+    print(one_county)
+
+    return render_template("pm25-charts.html", one_county=one_county)
 
 
 # 資料不想給外部看到，methods=["POST"]
@@ -120,6 +123,7 @@ def pm25_data():
 @app.route("/sixcounty-pm25")
 def get_sixcounty_pm25():
     pm25 = get_county_pm25()
+
     result = json.dumps(
         {"pm25": pm25, "site": six_countys},
         ensure_ascii=False,
