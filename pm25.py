@@ -55,7 +55,6 @@ def get_onecounty_pm25(county):
 
     col = df1.columns.tolist()
     values = df1.values.tolist()
-    print(col, values)
 
     return col, values
 

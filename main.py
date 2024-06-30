@@ -1,6 +1,12 @@
 from flask import Flask, render_template
 from datetime import datetime
-from pm25 import get_pm25, get_county_pm25, six_countys, get_onecounty
+from pm25 import (
+    get_pm25,
+    get_county_pm25,
+    six_countys,
+    get_onecounty,
+    get_onecounty_pm25,
+)
 import json
 
 # 全域端
@@ -129,6 +135,26 @@ def get_sixcounty_pm25():
         ensure_ascii=False,
     )
 
+    return result
+
+
+@app.route("/county-pm25-data/<county>", methods=["GET"])
+def onecounty_pm25(county):
+    cols, values = get_onecounty_pm25(county)
+    site = [value[0] for value in values]
+    pm25 = [value[2] for value in values]
+    datetime = values[0][-2]
+
+    # 前端只認識json，所以要以python的dict轉json輸出
+    result = json.dumps(
+        {
+            "site": site,
+            "pm25": pm25,
+        },
+        ensure_ascii=False,
+    )
+
+    # print(site, pm25)
     return result
 
 
