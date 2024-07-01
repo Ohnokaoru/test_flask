@@ -6,6 +6,56 @@ $("#update").click(() => {
     console.log("click");
 });
 
+
+
+// select option
+$("#select_county").change(() => {
+    county = $("#select_county").val()
+    console.log(county);
+    drawOnecounty_pm25(county)
+});
+
+
+
+
+function drawChart(chart, title, legend, xData, yData, color = "#40A578") {
+    // 基于准备好的dom，初始化echarts实例
+
+
+    // 指定图表的配置项和数据
+    let option = {
+        title: {
+            text: title
+        },
+        tooltip: {},
+        legend: {
+            data: [legend]
+        },
+        xAxis: {
+            data: xData
+        },
+        yAxis: {},
+        series: [
+            {
+                name: legend,
+                type: 'bar',
+                data: yData,
+                itemStyle: {
+                    color: color
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    chart.setOption(option);
+};
+
+
+
+
+
+
 // 呼叫函式
 drawPM25()
 
@@ -31,7 +81,7 @@ function drawPM25() {
             $("#pm25_low_value").text(result["min_data"]["pm25"]);
 
 
-            drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"])
+            drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"], "#FF4191")
 
             // 讀取完資料讓loading畫面消失
             myChart.hideLoading();
@@ -68,7 +118,7 @@ function drawSixcounty_pm25() {
 
             // jquery取值用法
 
-            drawChart(sixChart, "六都PM2.5平均值", "PM2.5", result["site"], result["pm25"])
+            drawChart(sixChart, "六都PM2.5平均值", "PM2.5", result["site"], result["pm25"], "#FFA62F")
 
             // 讀取完資料讓loading畫面消失
             sixChart.hideLoading();
@@ -115,12 +165,6 @@ function drawOnecounty_pm25(county) {
 };
 
 
-// select option
-$("#select_county").change(() => {
-    county = $("#select_county").val()
-    console.log(county);
-    drawOnecounty_pm25(county)
-});
 
 
 
@@ -132,41 +176,6 @@ $("#select_county").change(() => {
 
 
 
-
-
-
-
-
-
-function drawChart(chart, title, legend, xData, yData,) {
-    // 基于准备好的dom，初始化echarts实例
-
-
-    // 指定图表的配置项和数据
-    let option = {
-        title: {
-            text: title
-        },
-        tooltip: {},
-        legend: {
-            data: [legend]
-        },
-        xAxis: {
-            data: xData
-        },
-        yAxis: {},
-        series: [
-            {
-                name: legend,
-                type: 'bar',
-                data: yData
-            }
-        ]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    chart.setOption(option);
-};
 
 
 
