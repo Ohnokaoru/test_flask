@@ -80,17 +80,19 @@ function drawPM25() {
             $("#pm25_low_site").text(result["min_data"]["site"]);
             $("#pm25_low_value").text(result["min_data"]["pm25"]);
 
-
-            drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"], "#FF4191")
-
-            // 讀取完資料讓loading畫面消失
-            myChart.hideLoading();
-
             // 延遲出現
             this.setTimeout(() => {
+                drawChart(myChart, result["time"], "PM2.5", result["site"], result["pm25"], "#FF4191")
+
                 drawSixcounty_pm25();
                 drawOnecounty_pm25("彰化縣")
+
+                // 讀取完資料讓loading畫面消失
+                myChart.hideLoading();
+
             }, 1000);
+
+
         },
         error: () => {
             alert("读取数据失败");
@@ -100,6 +102,10 @@ function drawPM25() {
 
     });
 }
+
+
+
+
 
 
 // 繪製六都PM2.5平均值
@@ -116,12 +122,13 @@ function drawSixcounty_pm25() {
         success: (result) => {
             console.log(result);
 
-            // jquery取值用法
+            this.setTimeout(() => {
+                drawChart(sixChart, "六都PM2.5平均值", "PM2.5", result["site"], result["pm25"], "#FFA62F")
 
-            drawChart(sixChart, "六都PM2.5平均值", "PM2.5", result["site"], result["pm25"], "#FFA62F")
+                // 讀取完資料讓loading畫面消失
+                sixChart.hideLoading();
+            }, 1000);
 
-            // 讀取完資料讓loading畫面消失
-            sixChart.hideLoading();
 
         },
         error: () => {
@@ -132,6 +139,11 @@ function drawSixcounty_pm25() {
 
     });
 };
+
+
+
+
+
 
 // 畫單一縣市
 function drawOnecounty_pm25(county) {
@@ -147,12 +159,13 @@ function drawOnecounty_pm25(county) {
         success: (result) => {
             console.log(result);
 
-            // jquery取值用法
 
-            drawChart(select_county, county, "PM2.5", result["site"], result["pm25"])
+            this.setTimeout(() => {
+                drawChart(select_county, county, "PM2.5", result["site"], result["pm25"])
 
-            // 讀取完資料讓loading畫面消失
-            select_county.hideLoading();
+                // 讀取完資料讓loading畫面消失
+                select_county.hideLoading();
+            }, 1000);
 
         },
         error: () => {
