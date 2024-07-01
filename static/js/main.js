@@ -166,7 +166,6 @@ function drawOnecounty_pm25(county) {
                 // 讀取完資料讓loading畫面消失
                 select_county.hideLoading();
             }, 1000);
-
         },
         error: () => {
             alert("读取数据失败");

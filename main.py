@@ -93,7 +93,7 @@ def pm25_charts():
     one_county = get_onecounty()
     print(one_county)
 
-    return render_template("pm25-charts.html", one_county=one_county)
+    return render_template("pm25-charts-bulma.html", one_county=one_county)
 
 
 # 資料不想給外部看到，methods=["POST"]
